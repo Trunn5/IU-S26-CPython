@@ -1,3 +1,5 @@
 .idea/
 .venv/
 .venv314/
+
+**/__pycache__/*
