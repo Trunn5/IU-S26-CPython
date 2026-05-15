@@ -43,16 +43,12 @@ first_jit_i = None
 
 def f(n):
     global first_jit_i
-
-    s = 0
-    i = 0
-    while i < n:
+    result = []
+    for i in range(n):
         if first_jit_i is None and sys._jit.is_active():
             first_jit_i = i
-
-        s += i + 1
-        i += 1
-    return s
+        result.append({"x": i, "y": str(i)})
+    return result
 
 print("type(f):", type(f))
 print("f:", f)
@@ -75,7 +71,7 @@ for k in range(6):
     r = f(N)
     t1 = time.perf_counter()
 
-    print(f"run {k + 1}: result={r}, time={t1 - t0:.6f} sec, first_jit_i={first_jit_i}")
+    print(f"run {k + 1}: result=..., time={t1 - t0:.6f} sec, first_jit_i={first_jit_i}")
 
 # print("\n6) Bytecode после прогрева")
 # dis.dis(f, adaptive=True, show_caches=True)
