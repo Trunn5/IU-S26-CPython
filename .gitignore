@@ -3,3 +3,49 @@
 .venv314/
 
 **/__pycache__/*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+
+# Java
+*.class
+*.jar
+
+# C#
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+
+# Jupyter
+.ipynb_checkpoints/
+
+# JAX cache
+.jax_cache/
+
+# Numba cache
+.numba_cache/
+__numba_cache__/

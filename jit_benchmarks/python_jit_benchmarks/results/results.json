@@ -1,0 +1,922 @@
+[
+  {
+    "task": "control_flow",
+    "function": "collatz_sequence",
+    "jit": "cpython",
+    "time_ms": 0.057058362290263176,
+    "memory_kb": 0.3875,
+    "result": "111"
+  },
+  {
+    "task": "control_flow",
+    "function": "branching_heavy",
+    "jit": "cpython",
+    "time_ms": 395.97815005108714,
+    "memory_kb": 0.496875,
+    "result": "120180000"
+  },
+  {
+    "task": "control_flow",
+    "function": "early_exit_search",
+    "jit": "cpython",
+    "time_ms": 222.15752499178052,
+    "memory_kb": 39055.090625,
+    "result": "500000"
+  },
+  {
+    "task": "control_flow",
+    "function": "nested_conditions",
+    "jit": "cpython",
+    "time_ms": 286.461949814111,
+    "memory_kb": 0.465625,
+    "result": "7882339"
+  },
+  {
+    "task": "control_flow",
+    "function": "state_machine",
+    "jit": "cpython",
+    "time_ms": 389.7952834609896,
+    "memory_kb": 0.465625,
+    "result": "5633329"
+  },
+  {
+    "task": "simple_loop",
+    "function": "simple_loop",
+    "jit": "cpython",
+    "time_ms": 4086.320108221844,
+    "memory_kb": 0.54140625,
+    "result": "100000000000000"
+  },
+  {
+    "task": "simple_loop",
+    "function": "fibonacci_loop",
+    "jit": "cpython",
+    "time_ms": 28.51214138790965,
+    "memory_kb": 0.534375,
+    "result": "911435502"
+  },
+  {
+    "task": "simple_loop",
+    "function": "prime_count_loop",
+    "jit": "cpython",
+    "time_ms": 104.15354985743761,
+    "memory_kb": 0.5671875,
+    "result": "9592"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "matrix_multiply",
+    "jit": "cpython",
+    "time_ms": 2.056849794462323,
+    "memory_kb": 5861.3671875,
+    "result": "31252353.1150262"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "vector_operations",
+    "jit": "cpython",
+    "time_ms": 14.871658198535442,
+    "memory_kb": 46876.1609375,
+    "result": "1.270757753307476"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "array_reduction",
+    "jit": "cpython",
+    "time_ms": 3.1423083506524563,
+    "memory_kb": 7893.6171875,
+    "result": "50.68509878935904"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "stencil_operation",
+    "jit": "cpython",
+    "time_ms": 5.304074985906482,
+    "memory_kb": 15658.203125,
+    "result": "32.53123625042255"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "dict_operations",
+    "jit": "cpython",
+    "time_ms": 81.69769993983209,
+    "memory_kb": 110.876953125,
+    "result": "1000"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "list_operations",
+    "jit": "cpython",
+    "time_ms": 37.57289978675544,
+    "memory_kb": 6329.7734375,
+    "result": "665533373"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "nested_structures",
+    "jit": "cpython",
+    "time_ms": 14.207741618156433,
+    "memory_kb": 2413.7890625,
+    "result": "9841"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "json_like_processing",
+    "jit": "cpython",
+    "time_ms": 69.17202481999993,
+    "memory_kb": 7928.858203125,
+    "result": "10"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "set_operations",
+    "jit": "cpython",
+    "time_ms": 24.448375031352043,
+    "memory_kb": 17454.671875,
+    "result": "175000"
+  },
+  {
+    "task": "oop_code",
+    "function": "point_operations",
+    "jit": "cpython",
+    "time_ms": 1103.1762583181262,
+    "memory_kb": 10.8171875,
+    "result": "2082679.274670261"
+  },
+  {
+    "task": "oop_code",
+    "function": "vector_math",
+    "jit": "cpython",
+    "time_ms": 677.7132417540997,
+    "memory_kb": 1.3015625,
+    "result": "-99301051016.32788"
+  },
+  {
+    "task": "oop_code",
+    "function": "polymorphic_shapes",
+    "jit": "cpython",
+    "time_ms": 624.5353416074067,
+    "memory_kb": 13.121875,
+    "result": "7346831120.023152"
+  },
+  {
+    "task": "oop_code",
+    "function": "linked_list_traversal",
+    "jit": "cpython",
+    "time_ms": 27.122308360412717,
+    "memory_kb": 109.5625,
+    "result": "49950000"
+  },
+  {
+    "task": "oop_code",
+    "function": "method_calls_heavy",
+    "jit": "cpython",
+    "time_ms": 242.9121497552842,
+    "memory_kb": 0.715625,
+    "result": "25500000"
+  },
+  {
+    "task": "python_features",
+    "function": "eval_expressions",
+    "jit": "cpython",
+    "time_ms": 449.9641750473529,
+    "memory_kb": 32.5076171875,
+    "result": "103000.0"
+  },
+  {
+    "task": "python_features",
+    "function": "dynamic_attributes",
+    "jit": "cpython",
+    "time_ms": 52.85631683655083,
+    "memory_kb": 18.21796875,
+    "result": "99495000"
+  },
+  {
+    "task": "python_features",
+    "function": "string_formatting_complex",
+    "jit": "cpython",
+    "time_ms": 889.3496667500585,
+    "memory_kb": 10.37109375,
+    "result": "Name: Alice, Score: 95.5"
+  },
+  {
+    "task": "python_features",
+    "function": "generator_expressions",
+    "jit": "cpython",
+    "time_ms": 2.4286584462970495,
+    "memory_kb": 193.5703125,
+    "result": "24995000"
+  },
+  {
+    "task": "python_features",
+    "function": "decorator_heavy",
+    "jit": "cpython",
+    "time_ms": 156.3044833485037,
+    "memory_kb": 1.7265625,
+    "result": "999999937"
+  },
+  {
+    "task": "python_features",
+    "function": "context_managers",
+    "jit": "cpython",
+    "time_ms": 61.02478336542845,
+    "memory_kb": 4.21875,
+    "result": "50000"
+  },
+  {
+    "task": "python_features",
+    "function": "exception_handling_heavy",
+    "jit": "cpython",
+    "time_ms": 3.770683240145445,
+    "memory_kb": 0.840625,
+    "result": "1000"
+  },
+  {
+    "task": "python_features",
+    "function": "metaclass_usage",
+    "jit": "cpython",
+    "time_ms": 2.0065585616976023,
+    "memory_kb": 118.65625,
+    "result": "1000"
+  },
+  {
+    "task": "control_flow",
+    "function": "collatz_sequence",
+    "jit": "numba_nopython",
+    "time_ms": 0.01237494871020317,
+    "memory_kb": 0.29375,
+    "result": "111"
+  },
+  {
+    "task": "control_flow",
+    "function": "branching_heavy",
+    "jit": "numba_nopython",
+    "time_ms": 1.9787168130278587,
+    "memory_kb": 0.3109375,
+    "result": "120180000"
+  },
+  {
+    "task": "control_flow",
+    "function": "early_exit_search",
+    "jit": "numba_nopython",
+    "time_ms": 4.865508433431387,
+    "memory_kb": 7952.3125,
+    "result": "500000"
+  },
+  {
+    "task": "control_flow",
+    "function": "nested_conditions",
+    "jit": "numba_nopython",
+    "time_ms": 2.6646417565643787,
+    "memory_kb": 0.3109375,
+    "result": "7882339"
+  },
+  {
+    "task": "control_flow",
+    "function": "state_machine",
+    "jit": "numba_nopython",
+    "time_ms": 2.148191584274173,
+    "memory_kb": 0.3109375,
+    "result": "5633329"
+  },
+  {
+    "task": "simple_loop",
+    "function": "simple_loop",
+    "jit": "numba_nopython",
+    "time_ms": 0.01734974794089794,
+    "memory_kb": 0.3171875,
+    "result": "100000000000000"
+  },
+  {
+    "task": "simple_loop",
+    "function": "fibonacci_loop",
+    "jit": "numba_nopython",
+    "time_ms": 0.561008183285594,
+    "memory_kb": 0.3109375,
+    "result": "911435502"
+  },
+  {
+    "task": "simple_loop",
+    "function": "prime_count_loop",
+    "jit": "numba_nopython",
+    "time_ms": 2.6974170468747616,
+    "memory_kb": 0.3109375,
+    "result": "9592"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "vector_operations",
+    "jit": "numba_nopython",
+    "time_ms": 11.978300148621202,
+    "memory_kb": 23438.0859375,
+    "result": "1.2707577533074936"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "stencil_operation",
+    "jit": "numba_nopython",
+    "time_ms": 6.593416538089514,
+    "memory_kb": 15594.2578125,
+    "result": "-14.979619038414848"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "list_operations",
+    "jit": "numba_nopython",
+    "time_ms": 0.9482250548899174,
+    "memory_kb": 1290.953125,
+    "result": "665533373"
+  },
+  {
+    "task": "python_features",
+    "function": "generator_expressions",
+    "jit": "numba_nopython",
+    "time_ms": 0.07815812714397907,
+    "memory_kb": 46.9921875,
+    "result": "24995000"
+  },
+  {
+    "task": "control_flow",
+    "function": "collatz_sequence",
+    "jit": "numba_object",
+    "time_ms": 0.2048251684755087,
+    "memory_kb": 0.4359375,
+    "result": "111"
+  },
+  {
+    "task": "control_flow",
+    "function": "branching_heavy",
+    "jit": "numba_object",
+    "time_ms": 2.344783488661051,
+    "memory_kb": 0.459375,
+    "result": "120180000"
+  },
+  {
+    "task": "control_flow",
+    "function": "early_exit_search",
+    "jit": "numba_object",
+    "time_ms": 2413.965083518997,
+    "memory_kb": 46868.1388671875,
+    "result": "500000"
+  },
+  {
+    "task": "control_flow",
+    "function": "nested_conditions",
+    "jit": "numba_object",
+    "time_ms": 2.1238747984170914,
+    "memory_kb": 0.459375,
+    "result": "7882339"
+  },
+  {
+    "task": "control_flow",
+    "function": "state_machine",
+    "jit": "numba_object",
+    "time_ms": 0.983308395370841,
+    "memory_kb": 0.4671875,
+    "result": "5633329"
+  },
+  {
+    "task": "simple_loop",
+    "function": "simple_loop",
+    "jit": "numba_object",
+    "time_ms": 0.014424743130803108,
+    "memory_kb": 0.434375,
+    "result": "100000000000000"
+  },
+  {
+    "task": "simple_loop",
+    "function": "fibonacci_loop",
+    "jit": "numba_object",
+    "time_ms": 0.6713999900966883,
+    "memory_kb": 0.44375,
+    "result": "911435502"
+  },
+  {
+    "task": "simple_loop",
+    "function": "prime_count_loop",
+    "jit": "numba_object",
+    "time_ms": 2.716158190742135,
+    "memory_kb": 0.428125,
+    "result": "9592"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "matrix_multiply",
+    "jit": "numba_object",
+    "time_ms": 2.006341377273202,
+    "memory_kb": 5860.7578125,
+    "result": "31228837.811934955"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "vector_operations",
+    "jit": "numba_object",
+    "time_ms": 15.079183503985405,
+    "memory_kb": 31251.0921875,
+    "result": "1.270757753307476"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "array_reduction",
+    "jit": "numba_object",
+    "time_ms": 2.863333420827985,
+    "memory_kb": 7893.0078125,
+    "result": "50.71834371015991"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "stencil_operation",
+    "jit": "numba_object",
+    "time_ms": 5.01085021533072,
+    "memory_kb": 23439.59375,
+    "result": "-22.123407080465284"
+  },
+  {
+    "task": "oop_code",
+    "function": "vector_math",
+    "jit": "numba_object",
+    "time_ms": 929.7502831555903,
+    "memory_kb": 2.05703125,
+    "result": "-99301051016.32788"
+  },
+  {
+    "task": "oop_code",
+    "function": "polymorphic_shapes",
+    "jit": "numba_object",
+    "time_ms": 1427.0858504343778,
+    "memory_kb": 16.1189453125,
+    "result": "7346831120.023152"
+  },
+  {
+    "task": "oop_code",
+    "function": "linked_list_traversal",
+    "jit": "numba_object",
+    "time_ms": 51.00778345949948,
+    "memory_kb": 110.9537109375,
+    "result": "49950000"
+  },
+  {
+    "task": "oop_code",
+    "function": "method_calls_heavy",
+    "jit": "numba_object",
+    "time_ms": 1139.6724249701947,
+    "memory_kb": 1.889453125,
+    "result": "25500000"
+  },
+  {
+    "task": "python_features",
+    "function": "eval_expressions",
+    "jit": "numba_object",
+    "time_ms": 321.4848332107067,
+    "memory_kb": 33.1869140625,
+    "result": "103000.0"
+  },
+  {
+    "task": "control_flow",
+    "function": "collatz_sequence",
+    "jit": "pypy",
+    "time_ms": 0.02071661874651909,
+    "memory_kb": 9.6,
+    "result": "111"
+  },
+  {
+    "task": "control_flow",
+    "function": "branching_heavy",
+    "jit": "pypy",
+    "time_ms": 5.135758174583316,
+    "memory_kb": 0.0,
+    "result": "120180000"
+  },
+  {
+    "task": "control_flow",
+    "function": "early_exit_search",
+    "jit": "pypy",
+    "time_ms": 2.3915584199130535,
+    "memory_kb": 0.0,
+    "result": "500000"
+  },
+  {
+    "task": "control_flow",
+    "function": "nested_conditions",
+    "jit": "pypy",
+    "time_ms": 4.023033240810037,
+    "memory_kb": 0.0,
+    "result": "7882339"
+  },
+  {
+    "task": "control_flow",
+    "function": "state_machine",
+    "jit": "pypy",
+    "time_ms": 5.018291622400284,
+    "memory_kb": 0.0,
+    "result": "5633329"
+  },
+  {
+    "task": "simple_loop",
+    "function": "simple_loop",
+    "jit": "pypy",
+    "time_ms": 10.380483465269208,
+    "memory_kb": 0.0,
+    "result": "100000000000000"
+  },
+  {
+    "task": "simple_loop",
+    "function": "fibonacci_loop",
+    "jit": "pypy",
+    "time_ms": 0.6259330082684755,
+    "memory_kb": 0.0,
+    "result": "911435502"
+  },
+  {
+    "task": "simple_loop",
+    "function": "prime_count_loop",
+    "jit": "pypy",
+    "time_ms": 9.859150042757392,
+    "memory_kb": 0.0,
+    "result": "9592"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "matrix_multiply",
+    "jit": "pypy",
+    "time_ms": 2.1710502449423075,
+    "memory_kb": 1100.8,
+    "result": "31239628.827597864"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "vector_operations",
+    "jit": "pypy",
+    "time_ms": 41.56317478045821,
+    "memory_kb": 0.0,
+    "result": "1.2707577533074752"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "array_reduction",
+    "jit": "pypy",
+    "time_ms": 3.0150416307151318,
+    "memory_kb": 3.2,
+    "result": "50.78685914143287"
+  },
+  {
+    "task": "numpy_ops",
+    "function": "stencil_operation",
+    "jit": "pypy",
+    "time_ms": 12.263649981468916,
+    "memory_kb": 0.0,
+    "result": "28.409509988604455"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "dict_operations",
+    "jit": "pypy",
+    "time_ms": 7.841199962422252,
+    "memory_kb": 0.0,
+    "result": "1000"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "list_operations",
+    "jit": "pypy",
+    "time_ms": 0.9451000951230526,
+    "memory_kb": 464.0,
+    "result": "665533373"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "nested_structures",
+    "jit": "pypy",
+    "time_ms": 5.740841804072261,
+    "memory_kb": 16.0,
+    "result": "9841"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "json_like_processing",
+    "jit": "pypy",
+    "time_ms": 6.029108166694641,
+    "memory_kb": 67.2,
+    "result": "10"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "set_operations",
+    "jit": "pypy",
+    "time_ms": 3.7937331944704056,
+    "memory_kb": 38.4,
+    "result": "175000"
+  },
+  {
+    "task": "oop_code",
+    "function": "point_operations",
+    "jit": "pypy",
+    "time_ms": 25.011041574180126,
+    "memory_kb": 0.0,
+    "result": "2082679.274670261"
+  },
+  {
+    "task": "oop_code",
+    "function": "vector_math",
+    "jit": "pypy",
+    "time_ms": 4.82453340664506,
+    "memory_kb": 0.0,
+    "result": "-99301051016.32788"
+  },
+  {
+    "task": "oop_code",
+    "function": "polymorphic_shapes",
+    "jit": "pypy",
+    "time_ms": 3.454583464190364,
+    "memory_kb": 0.0,
+    "result": "7346831120.023152"
+  },
+  {
+    "task": "oop_code",
+    "function": "linked_list_traversal",
+    "jit": "pypy",
+    "time_ms": 0.16245008446276188,
+    "memory_kb": 0.0,
+    "result": "49950000"
+  },
+  {
+    "task": "oop_code",
+    "function": "method_calls_heavy",
+    "jit": "pypy",
+    "time_ms": 2.1964082028716803,
+    "memory_kb": 0.0,
+    "result": "25500000"
+  },
+  {
+    "task": "python_features",
+    "function": "eval_expressions",
+    "jit": "pypy",
+    "time_ms": 105.25151654146612,
+    "memory_kb": 144.0,
+    "result": "103000.0"
+  },
+  {
+    "task": "python_features",
+    "function": "dynamic_attributes",
+    "jit": "pypy",
+    "time_ms": 14.560149982571602,
+    "memory_kb": 9.6,
+    "result": "99495000"
+  },
+  {
+    "task": "python_features",
+    "function": "string_formatting_complex",
+    "jit": "pypy",
+    "time_ms": 187.71944157779217,
+    "memory_kb": 0.0,
+    "result": "Name: Alice, Score: 95.5"
+  },
+  {
+    "task": "python_features",
+    "function": "generator_expressions",
+    "jit": "pypy",
+    "time_ms": 0.1458663959056139,
+    "memory_kb": 0.0,
+    "result": "24995000"
+  },
+  {
+    "task": "python_features",
+    "function": "decorator_heavy",
+    "jit": "pypy",
+    "time_ms": 0.5888750310987234,
+    "memory_kb": 0.0,
+    "result": "999999937"
+  },
+  {
+    "task": "python_features",
+    "function": "context_managers",
+    "jit": "pypy",
+    "time_ms": 7.578924996778369,
+    "memory_kb": 3.2,
+    "result": "50000"
+  },
+  {
+    "task": "python_features",
+    "function": "exception_handling_heavy",
+    "jit": "pypy",
+    "time_ms": 0.7504498586058617,
+    "memory_kb": 0.0,
+    "result": "1000"
+  },
+  {
+    "task": "python_features",
+    "function": "metaclass_usage",
+    "jit": "pypy",
+    "time_ms": 2.9129086527973413,
+    "memory_kb": 6.4,
+    "result": "1000"
+  },
+  {
+    "task": "control_flow",
+    "function": "collatz_sequence",
+    "jit": "cpython_jit",
+    "time_ms": 0.01688343472778797,
+    "memory_kb": 0.0,
+    "result": "111"
+  },
+  {
+    "task": "control_flow",
+    "function": "branching_heavy",
+    "jit": "cpython_jit",
+    "time_ms": 73.7395416945219,
+    "memory_kb": 0.0,
+    "result": "120180000"
+  },
+  {
+    "task": "control_flow",
+    "function": "early_exit_search",
+    "jit": "cpython_jit",
+    "time_ms": 52.460925094783306,
+    "memory_kb": 0.0,
+    "result": "500000"
+  },
+  {
+    "task": "control_flow",
+    "function": "nested_conditions",
+    "jit": "cpython_jit",
+    "time_ms": 87.95301639474928,
+    "memory_kb": 0.0,
+    "result": "7882339"
+  },
+  {
+    "task": "control_flow",
+    "function": "state_machine",
+    "jit": "cpython_jit",
+    "time_ms": 78.18979159928858,
+    "memory_kb": 0.0,
+    "result": "5633329"
+  },
+  {
+    "task": "simple_loop",
+    "function": "simple_loop",
+    "jit": "cpython_jit",
+    "time_ms": 824.0843834355474,
+    "memory_kb": 0.0,
+    "result": "100000000000000"
+  },
+  {
+    "task": "simple_loop",
+    "function": "fibonacci_loop",
+    "jit": "cpython_jit",
+    "time_ms": 6.187916360795498,
+    "memory_kb": 0.0,
+    "result": "911435502"
+  },
+  {
+    "task": "simple_loop",
+    "function": "prime_count_loop",
+    "jit": "cpython_jit",
+    "time_ms": 71.03659976273775,
+    "memory_kb": 0.0,
+    "result": "9592"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "dict_operations",
+    "jit": "cpython_jit",
+    "time_ms": 20.73820000514388,
+    "memory_kb": 0.0,
+    "result": "1000"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "list_operations",
+    "jit": "cpython_jit",
+    "time_ms": 8.682883204892278,
+    "memory_kb": 0.0,
+    "result": "665533373"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "nested_structures",
+    "jit": "cpython_jit",
+    "time_ms": 4.61314981803298,
+    "memory_kb": 0.0,
+    "result": "9841"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "json_like_processing",
+    "jit": "cpython_jit",
+    "time_ms": 14.448666526004672,
+    "memory_kb": 0.0,
+    "result": "10"
+  },
+  {
+    "task": "dynamic_structures",
+    "function": "set_operations",
+    "jit": "cpython_jit",
+    "time_ms": 6.233691610395908,
+    "memory_kb": 0.0,
+    "result": "175000"
+  },
+  {
+    "task": "oop_code",
+    "function": "point_operations",
+    "jit": "cpython_jit",
+    "time_ms": 284.7185086924583,
+    "memory_kb": 0.0,
+    "result": "2082679.274670261"
+  },
+  {
+    "task": "oop_code",
+    "function": "vector_math",
+    "jit": "cpython_jit",
+    "time_ms": 77.02906676568091,
+    "memory_kb": 0.0,
+    "result": "-99301051016.32788"
+  },
+  {
+    "task": "oop_code",
+    "function": "polymorphic_shapes",
+    "jit": "cpython_jit",
+    "time_ms": 46.8861916102469,
+    "memory_kb": 0.0,
+    "result": "7346831120.023152"
+  },
+  {
+    "task": "oop_code",
+    "function": "linked_list_traversal",
+    "jit": "cpython_jit",
+    "time_ms": 1.156916655600071,
+    "memory_kb": 0.0,
+    "result": "49950000"
+  },
+  {
+    "task": "oop_code",
+    "function": "method_calls_heavy",
+    "jit": "cpython_jit",
+    "time_ms": 42.63501660898328,
+    "memory_kb": 0.0,
+    "result": "25500000"
+  },
+  {
+    "task": "python_features",
+    "function": "eval_expressions",
+    "jit": "cpython_jit",
+    "time_ms": 60.17649155110121,
+    "memory_kb": 0.0,
+    "result": "103000.0"
+  },
+  {
+    "task": "python_features",
+    "function": "dynamic_attributes",
+    "jit": "cpython_jit",
+    "time_ms": 3.9827667642384768,
+    "memory_kb": 0.0,
+    "result": "99495000"
+  },
+  {
+    "task": "python_features",
+    "function": "string_formatting_complex",
+    "jit": "cpython_jit",
+    "time_ms": 92.32206656597555,
+    "memory_kb": 0.0,
+    "result": "Name: Alice, Score: 95.5"
+  },
+  {
+    "task": "python_features",
+    "function": "generator_expressions",
+    "jit": "cpython_jit",
+    "time_ms": 0.2361332532018423,
+    "memory_kb": 0.0,
+    "result": "24995000"
+  },
+  {
+    "task": "python_features",
+    "function": "decorator_heavy",
+    "jit": "cpython_jit",
+    "time_ms": 17.86517519503832,
+    "memory_kb": 0.0,
+    "result": "999999937"
+  },
+  {
+    "task": "python_features",
+    "function": "context_managers",
+    "jit": "cpython_jit",
+    "time_ms": 5.751741724088788,
+    "memory_kb": 0.0,
+    "result": "50000"
+  },
+  {
+    "task": "python_features",
+    "function": "exception_handling_heavy",
+    "jit": "cpython_jit",
+    "time_ms": 0.5172748118638992,
+    "memory_kb": 0.0,
+    "result": "1000"
+  },
+  {
+    "task": "python_features",
+    "function": "metaclass_usage",
+    "jit": "cpython_jit",
+    "time_ms": 0.370583264157176,
+    "memory_kb": 0.0,
+    "result": "1000"
+  }
+]

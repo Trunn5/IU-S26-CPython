@@ -1,0 +1,1051 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Python JIT Comparison</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+    .container { max-width: 1400px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; }
+    h1 { color: #333; border-bottom: 3px solid #2563eb; padding-bottom: 10px; }
+    .chart-container { margin: 30px 0; }
+    canvas { max-height: 400px; }
+    .stats { background: #f9fafb; padding: 15px; border-radius: 5px; margin: 20px 0; }
+    details { margin: 20px 0; border: 1px solid #e5e7eb; border-radius: 8px; background: #fafafa; }
+    details[open] { background: white; }
+    summary { 
+      padding: 15px 20px; 
+      cursor: pointer; 
+      font-size: 1.2em; 
+      font-weight: bold; 
+      color: #2563eb;
+      user-select: none;
+      transition: background 0.2s;
+    }
+    summary:hover { background: #f0f0f0; border-radius: 8px; }
+    .task-content { padding: 20px; }
+    .hint { 
+      background: #e0f2fe; 
+      padding: 10px 15px; 
+      border-left: 4px solid #0284c7; 
+      margin: 15px 0; 
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Python JIT Benchmarks</h1>
+    <div class="stats">
+      <strong>Total:</strong> 115 measurements<br>
+      <strong>JITs:</strong> cpython, cpython_jit, numba_nopython, numba_object, pypy<br>
+      <strong>Tasks:</strong> control_flow, dynamic_structures, numpy_ops, oop_code, python_features, simple_loop
+    </div>
+    <div class="hint">
+      Чтобы скрыть JIT, нажмите на его название в легенде.<br>
+      Время отображается на логарифмической шкале, чтобы лучше видеть быстрые и медленные функции.
+    </div>
+
+    <details open>
+      <summary>control_flow</summary>
+      <div class="task-content">
+        <div class="chart-container">
+          <h3>Time (ms)</h3>
+          <canvas id="time_control_flow"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Memory (KB)</h3>
+          <canvas id="memory_control_flow"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <h3>Speedup</h3>
+          <canvas id="speedup_control_flow"></canvas>
+        </div>
+
+      </div>
+    </details>
+
+    <details open>
+      <summary>dynamic_structures</summary>
+      <div class="task-content">
+        <div class="chart-container">
+          <h3>Time (ms)</h3>
+          <canvas id="time_dynamic_structures"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Memory (KB)</h3>
+          <canvas id="memory_dynamic_structures"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <h3>Speedup</h3>
+          <canvas id="speedup_dynamic_structures"></canvas>
+        </div>
+
+      </div>
+    </details>
+
+    <details open>
+      <summary>numpy_ops</summary>
+      <div class="task-content">
+        <div class="chart-container">
+          <h3>Time (ms)</h3>
+          <canvas id="time_numpy_ops"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Memory (KB)</h3>
+          <canvas id="memory_numpy_ops"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <h3>Speedup</h3>
+          <canvas id="speedup_numpy_ops"></canvas>
+        </div>
+
+      </div>
+    </details>
+
+    <details open>
+      <summary>oop_code</summary>
+      <div class="task-content">
+        <div class="chart-container">
+          <h3>Time (ms)</h3>
+          <canvas id="time_oop_code"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Memory (KB)</h3>
+          <canvas id="memory_oop_code"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <h3>Speedup</h3>
+          <canvas id="speedup_oop_code"></canvas>
+        </div>
+
+      </div>
+    </details>
+
+    <details open>
+      <summary>python_features</summary>
+      <div class="task-content">
+        <div class="chart-container">
+          <h3>Time (ms)</h3>
+          <canvas id="time_python_features"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Memory (KB)</h3>
+          <canvas id="memory_python_features"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <h3>Speedup</h3>
+          <canvas id="speedup_python_features"></canvas>
+        </div>
+
+      </div>
+    </details>
+
+    <details open>
+      <summary>simple_loop</summary>
+      <div class="task-content">
+        <div class="chart-container">
+          <h3>Time (ms)</h3>
+          <canvas id="time_simple_loop"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Memory (KB)</h3>
+          <canvas id="memory_simple_loop"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <h3>Speedup</h3>
+          <canvas id="speedup_simple_loop"></canvas>
+        </div>
+
+      </div>
+    </details>
+
+  </div>
+  <script>
+
+    new Chart(document.getElementById("time_control_flow"), {
+      type: "bar",
+      data: {"labels": ["branching_heavy", "collatz_sequence", "early_exit_search", "nested_conditions", "state_machine"], "datasets": [{"label": "cpython", "data": [395.97815005108714, 0.057058362290263176, 222.15752499178052, 286.461949814111, 389.7952834609896], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [73.7395416945219, 0.01688343472778797, 52.460925094783306, 87.95301639474928, 78.18979159928858], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [1.9787168130278587, 0.01237494871020317, 4.865508433431387, 2.6646417565643787, 2.148191584274173], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [2.344783488661051, 0.2048251684755087, 2413.965083518997, 2.1238747984170914, 0.983308395370841], "backgroundColor": "#999999"}, {"label": "pypy", "data": [5.135758174583316, 0.02071661874651909, 2.3915584199130535, 4.023033240810037, 5.018291622400284], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' ms';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            type: 'logarithmic',
+            title: { display: true, text: "Time (ms) - log scale" },
+            ticks: {
+              callback: function(value) {
+                if (value === 0.01 || value === 0.1 || value === 1 || value === 10 || 
+                    value === 100 || value === 1000 || value === 10000) {
+                  return value;
+                }
+                return null;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    new Chart(document.getElementById("memory_control_flow"), {
+      type: "bar",
+      data: {"labels": ["branching_heavy", "collatz_sequence", "early_exit_search", "nested_conditions", "state_machine"], "datasets": [{"label": "cpython", "data": [0.496875, 0.3875, 39055.090625, 0.465625, 0.465625], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [0.3109375, 0.29375, 7952.3125, 0.3109375, 0.3109375], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.459375, 0.4359375, 46868.1388671875, 0.459375, 0.4671875], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 9.6, 0.0, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' KB';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Memory (KB)" }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("speedup_control_flow"), {
+      type: "bar",
+      data: {"labels": ["branching_heavy", "collatz_sequence", "early_exit_search", "nested_conditions", "state_machine"], "datasets": [{"label": "cpython_jit", "data": [5.3699567552439005, 3.3795470655240796, 4.234723741344618, 3.256988350785119, 4.985245202578801], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [200.11865641610237, 4.610795860771402, 45.659673193723044, 107.50486406227341, 181.45275603651197], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [168.8762105183553, 0.2785710502031675, 0.09203013188075064, 134.87704172939434, 396.412036443545], "backgroundColor": "#999999"}, {"label": "pypy", "data": [77.10217977372238, 2.754231421083154, 92.89236806511178, 71.20546430196335, 77.6748967160557], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(1) + 'x speedup';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Speedup (x)" },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("time_dynamic_structures"), {
+      type: "bar",
+      data: {"labels": ["dict_operations", "json_like_processing", "list_operations", "nested_structures", "set_operations"], "datasets": [{"label": "cpython", "data": [81.69769993983209, 69.17202481999993, 37.57289978675544, 14.207741618156433, 24.448375031352043], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [20.73820000514388, 14.448666526004672, 8.682883204892278, 4.61314981803298, 6.233691610395908], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 0.9482250548899174, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [7.841199962422252, 6.029108166694641, 0.9451000951230526, 5.740841804072261, 3.7937331944704056], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' ms';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            type: 'logarithmic',
+            title: { display: true, text: "Time (ms) - log scale" },
+            ticks: {
+              callback: function(value) {
+                if (value === 0.01 || value === 0.1 || value === 1 || value === 10 || 
+                    value === 100 || value === 1000 || value === 10000) {
+                  return value;
+                }
+                return null;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    new Chart(document.getElementById("memory_dynamic_structures"), {
+      type: "bar",
+      data: {"labels": ["dict_operations", "json_like_processing", "list_operations", "nested_structures", "set_operations"], "datasets": [{"label": "cpython", "data": [110.876953125, 7928.858203125, 6329.7734375, 2413.7890625, 17454.671875], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 1290.953125, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 67.2, 464.0, 16.0, 38.4], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' KB';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Memory (KB)" }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("speedup_dynamic_structures"), {
+      type: "bar",
+      data: {"labels": ["dict_operations", "json_like_processing", "list_operations", "nested_structures", "set_operations"], "datasets": [{"label": "cpython_jit", "data": [3.939478832278977, 4.78743313062865, 4.3272377273928315, 3.0798352922807375, 3.9219737772365195], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 39.62445370220407, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [10.419030292730168, 11.473011083482078, 39.75547138407962, 2.4748533582789523, 6.44441076325215], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(1) + 'x speedup';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Speedup (x)" },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("time_numpy_ops"), {
+      type: "bar",
+      data: {"labels": ["array_reduction", "matrix_multiply", "stencil_operation", "vector_operations"], "datasets": [{"label": "cpython", "data": [3.1423083506524563, 2.056849794462323, 5.304074985906482, 14.871658198535442], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [null, null, null, null], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 6.593416538089514, 11.978300148621202], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [2.863333420827985, 2.006341377273202, 5.01085021533072, 15.079183503985405], "backgroundColor": "#999999"}, {"label": "pypy", "data": [3.0150416307151318, 2.1710502449423075, 12.263649981468916, 41.56317478045821], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' ms';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            type: 'logarithmic',
+            title: { display: true, text: "Time (ms) - log scale" },
+            ticks: {
+              callback: function(value) {
+                if (value === 0.01 || value === 0.1 || value === 1 || value === 10 || 
+                    value === 100 || value === 1000 || value === 10000) {
+                  return value;
+                }
+                return null;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    new Chart(document.getElementById("memory_numpy_ops"), {
+      type: "bar",
+      data: {"labels": ["array_reduction", "matrix_multiply", "stencil_operation", "vector_operations"], "datasets": [{"label": "cpython", "data": [7893.6171875, 5861.3671875, 15658.203125, 46876.1609375], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [null, null, null, null], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 15594.2578125, 23438.0859375], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [7893.0078125, 5860.7578125, 23439.59375, 31251.0921875], "backgroundColor": "#999999"}, {"label": "pypy", "data": [3.2, 1100.8, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' KB';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Memory (KB)" }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("speedup_numpy_ops"), {
+      type: "bar",
+      data: {"labels": ["array_reduction", "matrix_multiply", "stencil_operation", "vector_operations"], "datasets": [{"label": "cpython_jit", "data": [null, null, null, null], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 0.8044501595288825, 1.2415499706982456], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [1.0974301238532678, 1.0251743884471778, 1.0585179676053056, 0.9862376298162885], "backgroundColor": "#999999"}, {"label": "pypy", "data": [1.0422106012205008, 0.9473985225602095, 0.4325037810049411, 0.3578085234607165], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(1) + 'x speedup';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Speedup (x)" },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("time_oop_code"), {
+      type: "bar",
+      data: {"labels": ["linked_list_traversal", "method_calls_heavy", "point_operations", "polymorphic_shapes", "vector_math"], "datasets": [{"label": "cpython", "data": [27.122308360412717, 242.9121497552842, 1103.1762583181262, 624.5353416074067, 677.7132417540997], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [1.156916655600071, 42.63501660898328, 284.7185086924583, 46.8861916102469, 77.02906676568091], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [51.00778345949948, 1139.6724249701947, null, 1427.0858504343778, 929.7502831555903], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.16245008446276188, 2.1964082028716803, 25.011041574180126, 3.454583464190364, 4.82453340664506], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' ms';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            type: 'logarithmic',
+            title: { display: true, text: "Time (ms) - log scale" },
+            ticks: {
+              callback: function(value) {
+                if (value === 0.01 || value === 0.1 || value === 1 || value === 10 || 
+                    value === 100 || value === 1000 || value === 10000) {
+                  return value;
+                }
+                return null;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    new Chart(document.getElementById("memory_oop_code"), {
+      type: "bar",
+      data: {"labels": ["linked_list_traversal", "method_calls_heavy", "point_operations", "polymorphic_shapes", "vector_math"], "datasets": [{"label": "cpython", "data": [109.5625, 0.715625, 10.8171875, 13.121875, 1.3015625], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [110.9537109375, 1.889453125, null, 16.1189453125, 2.05703125], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' KB';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Memory (KB)" }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("speedup_oop_code"), {
+      type: "bar",
+      data: {"labels": ["linked_list_traversal", "method_calls_heavy", "point_operations", "polymorphic_shapes", "vector_math"], "datasets": [{"label": "cpython_jit", "data": [23.443614740203465, 5.697479890370258, 3.87462080840601, 13.320240355604305, 8.798149454616581], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.5317288170725555, 0.21314207875270558, null, 0.4376298324430237, 0.7289196400714479], "backgroundColor": "#999999"}, {"label": "pypy", "data": [166.9577978374638, 110.59517508525519, 44.10756965263606, 180.78455711990634, 140.47228708597044], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(1) + 'x speedup';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Speedup (x)" },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("time_python_features"), {
+      type: "bar",
+      data: {"labels": ["context_managers", "decorator_heavy", "dynamic_attributes", "eval_expressions", "exception_handling_heavy", "generator_expressions", "metaclass_usage", "string_formatting_complex"], "datasets": [{"label": "cpython", "data": [61.02478336542845, 156.3044833485037, 52.85631683655083, 449.9641750473529, 3.770683240145445, 2.4286584462970495, 2.0065585616976023, 889.3496667500585], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [5.751741724088788, 17.86517519503832, 3.9827667642384768, 60.17649155110121, 0.5172748118638992, 0.2361332532018423, 0.370583264157176, 92.32206656597555], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null, 0.07815812714397907, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, 321.4848332107067, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [7.578924996778369, 0.5888750310987234, 14.560149982571602, 105.25151654146612, 0.7504498586058617, 0.1458663959056139, 2.9129086527973413, 187.71944157779217], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' ms';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            type: 'logarithmic',
+            title: { display: true, text: "Time (ms) - log scale" },
+            ticks: {
+              callback: function(value) {
+                if (value === 0.01 || value === 0.1 || value === 1 || value === 10 || 
+                    value === 100 || value === 1000 || value === 10000) {
+                  return value;
+                }
+                return null;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    new Chart(document.getElementById("memory_python_features"), {
+      type: "bar",
+      data: {"labels": ["context_managers", "decorator_heavy", "dynamic_attributes", "eval_expressions", "exception_handling_heavy", "generator_expressions", "metaclass_usage", "string_formatting_complex"], "datasets": [{"label": "cpython", "data": [4.21875, 1.7265625, 18.21796875, 32.5076171875, 0.840625, 193.5703125, 118.65625, 10.37109375], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null, 46.9921875, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, 33.1869140625, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [3.2, 0.0, 9.6, 144.0, 0.0, 0.0, 6.4, 0.0], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' KB';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Memory (KB)" }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("speedup_python_features"), {
+      type: "bar",
+      data: {"labels": ["context_managers", "decorator_heavy", "dynamic_attributes", "eval_expressions", "exception_handling_heavy", "generator_expressions", "metaclass_usage", "string_formatting_complex"], "datasets": [{"label": "cpython_jit", "data": [10.609792006106849, 8.749115619751327, 13.271255879493411, 7.477407928729915, 7.289516430460862, 10.285118310808505, 5.4145957353502014, 9.633121309243094], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null, 31.0736520313888, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, 1.399643555664844, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [8.05190490621938, 265.4289536726845, 3.6302041462360948, 4.2751324620589175, 5.024563862468282, 16.64988314284921, 0.6888504930529326, 4.737653485835169], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(1) + 'x speedup';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Speedup (x)" },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("time_simple_loop"), {
+      type: "bar",
+      data: {"labels": ["fibonacci_loop", "prime_count_loop", "simple_loop"], "datasets": [{"label": "cpython", "data": [28.51214138790965, 104.15354985743761, 4086.320108221844], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [6.187916360795498, 71.03659976273775, 824.0843834355474], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [0.561008183285594, 2.6974170468747616, 0.01734974794089794], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.6713999900966883, 2.716158190742135, 0.014424743130803108], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.6259330082684755, 9.859150042757392, 10.380483465269208], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' ms';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            type: 'logarithmic',
+            title: { display: true, text: "Time (ms) - log scale" },
+            ticks: {
+              callback: function(value) {
+                if (value === 0.01 || value === 0.1 || value === 1 || value === 10 || 
+                    value === 100 || value === 1000 || value === 10000) {
+                  return value;
+                }
+                return null;
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    new Chart(document.getElementById("memory_simple_loop"), {
+      type: "bar",
+      data: {"labels": ["fibonacci_loop", "prime_count_loop", "simple_loop"], "datasets": [{"label": "cpython", "data": [0.534375, 0.5671875, 0.54140625], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [0.3109375, 0.3109375, 0.3171875], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.44375, 0.428125, 0.434375], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(2) + ' KB';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Memory (KB)" }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById("speedup_simple_loop"), {
+      type: "bar",
+      data: {"labels": ["fibonacci_loop", "prime_count_loop", "simple_loop"], "datasets": [{"label": "cpython_jit", "data": [4.607712794657784, 1.4661955978370371, 4.958618547273369], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [50.82304008637767, 38.61232729218136, 235526.1945096797], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [42.46669914874979, 38.34590717596598, 283285.46797452297], "backgroundColor": "#999999"}, {"label": "pypy", "data": [45.55142644862756, 10.564151007515056, 393.6541223627747], "backgroundColor": "#dc2626"}]},
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top',
+            onClick: function(e, legendItem, legend) {
+              const index = legendItem.datasetIndex;
+              const ci = legend.chart;
+              const meta = ci.getDatasetMeta(index);
+              meta.hidden = meta.hidden === null ? !ci.data.datasets[index].hidden : null;
+              ci.update();
+            },
+            labels: {
+              padding: 15,
+              usePointStyle: true,
+              font: { size: 12 }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) { label += ': '; }
+                label += context.parsed.y.toFixed(1) + 'x speedup';
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            title: { display: true, text: "Speedup (x)" },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+  </script>
+</body>
+</html>

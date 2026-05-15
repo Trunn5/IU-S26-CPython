@@ -4,11 +4,8 @@ __pycache__/
 *$py.class
 *.so
 .Python
-
-# Virtual environments
-venv/
 .venv/
-env/
+venv/
 ENV/
 
 # Results
@@ -16,7 +13,18 @@ results/*.csv
 results/*.html
 results/*.json
 
-# IDE
+# Java
+*.class
+*.jar
+
+# C#
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+
+# IDEs
 .vscode/
 .idea/
 *.swp
@@ -27,12 +35,5 @@ results/*.json
 .DS_Store
 Thumbs.db
 
-# Jupyter
-.ipynb_checkpoints/
-
-# JAX cache
-.jax_cache/
-
-# Numba cache
-.numba_cache/
-__numba_cache__/
+# Logs
+*.log
