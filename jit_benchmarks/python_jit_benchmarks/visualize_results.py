@@ -233,7 +233,11 @@ def generate_html_report(results, output_file):
               label: function(context) {{
                 let label = context.dataset.label || '';
                 if (label) {{ label += ': '; }}
-                label += context.parsed.y.toFixed(2) + ' ms';
+                if (context.parsed.y === null || context.parsed.y === undefined) {{
+                  label += 'N/A (skipped)';
+                }} else {{
+                  label += context.parsed.y.toFixed(2) + ' ms';
+                }}
                 return label;
               }}
             }}
@@ -288,7 +292,11 @@ def generate_html_report(results, output_file):
               label: function(context) {{
                 let label = context.dataset.label || '';
                 if (label) {{ label += ': '; }}
-                label += context.parsed.y.toFixed(2) + ' KB';
+                if (context.parsed.y === null || context.parsed.y === undefined) {{
+                  label += 'N/A (skipped)';
+                }} else {{
+                  label += context.parsed.y.toFixed(2) + ' KB';
+                }}
                 return label;
               }}
             }}
@@ -337,7 +345,11 @@ def generate_html_report(results, output_file):
               label: function(context) {{
                 let label = context.dataset.label || '';
                 if (label) {{ label += ': '; }}
-                label += context.parsed.y.toFixed(1) + 'x speedup';
+                if (context.parsed.y === null || context.parsed.y === undefined) {{
+                  label += 'N/A (skipped)';
+                }} else {{
+                  label += context.parsed.y.toFixed(1) + 'x speedup';
+                }}
                 return label;
               }}
             }}
