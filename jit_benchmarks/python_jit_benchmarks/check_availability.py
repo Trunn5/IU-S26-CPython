@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 CPYTHON_JIT_EXE = ROOT.parent.parent / "cpython" / "python.exe"
-VENV_PYTHON = ROOT / ".venv" / "bin" / "python3"
+VENV_PYTHON = ROOT.parent.parent / ".venv" / "bin" / "python3"
 
 
 def check_import_in_venv(module_name, venv_path):

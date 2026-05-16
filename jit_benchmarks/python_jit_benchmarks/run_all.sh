@@ -9,25 +9,25 @@ echo "=============================="
 
 [ -f "results/results.json" ] && rm results/results.json
 
-.venv/bin/python3 check_availability.py
+../../.venv/bin/python3 check_availability.py
 
 echo ""
 echo "CPython..."
 python3 run_single_jit.py cpython
 
-if [ -f ".venv/bin/python3" ]; then
+if [ -f "../../.venv/bin/python3" ]; then
     echo ""
     echo "Numba (nopython=True)..."
-    .venv/bin/python3 run_single_jit.py numba_nopython
+    ../../.venv/bin/python3 run_single_jit.py numba_nopython
     echo ""
     echo "Numba (nopython=False, object mode)..."
-    .venv/bin/python3 run_single_jit.py numba_object
+    ../../.venv/bin/python3 run_single_jit.py numba_object
 fi
 
-if [ -f ".venv_pypy/bin/pypy3" ]; then
+if [ -f "../../.venv_pypy/bin/pypy3" ]; then
     echo ""
     echo "PyPy (with NumPy)..."
-    .venv_pypy/bin/pypy3 run_single_jit.py pypy
+    ../../.venv_pypy/bin/pypy3 run_single_jit.py pypy
 elif command -v pypy3 &> /dev/null; then
     echo ""
     echo "PyPy..."

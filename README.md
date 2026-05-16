@@ -11,6 +11,13 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+
+```bash
+pypy3 -m venv .venv_pypy
+source .venv_pypy/bin/activate
+pip install -r requirements.txt
+```
+
 ```bash
 git clone https://github.com/python/cpython.git
 cd cpython

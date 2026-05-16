@@ -49,3 +49,6 @@ Thumbs.db
 # Numba cache
 .numba_cache/
 __numba_cache__/
+
+cpython/
+.venv_pypy/
