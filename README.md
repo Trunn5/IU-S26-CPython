@@ -40,7 +40,6 @@ PYTHON_JIT=1 ./python.exe -c "print('CPython JIT works!')"
 - `JIT - CPython S26.pdf` - Презентация
 - `CONCLUSIONS.md` - Выводы по исследованию JIT
 - `jit_benchmarks/python_jit_examples/` - Примеры использования JIT
-- `jit_benchmarks/THEORY.md` - Детальная теория JIT-компиляции
 
 ### Практическая часть (Бенчмарки)
 - `jit_benchmarks/python_jit_benchmarks/` - Сравнение Python JIT компиляторов
@@ -48,6 +47,7 @@ PYTHON_JIT=1 ./python.exe -c "print('CPython JIT works!')"
   - 5 JIT: CPython, PyPy, Numba (nopython + object), CPython JIT
   - Измерение времени и памяти
   - HTML отчет с графиками
+  - Легко масштабируется под собственные фукнции
 
 **Запуск:**
 ```bash
