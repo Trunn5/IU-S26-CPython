@@ -4,6 +4,9 @@
  - python - Python 3.14.3
  - pypy3 - [PyPy 7.3.17 with GCC Apple LLVM 17.0.0 (clang-1700.3.19.1)]
  - cpython - Jit сборка
+ - node - Node.js: v25.9.0
+ - java - Java: openjdk version "17.0.18" 2026-01-20 LTS
+ - dotnet - .NET: 10.0.107
 
 ```bash
 python3 -m venv .venv

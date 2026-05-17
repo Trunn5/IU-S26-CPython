@@ -38,7 +38,7 @@
   <div class="container">
     <h1>Python JIT Benchmarks</h1>
     <div class="stats">
-      <strong>Total:</strong> 115 measurements<br>
+      <strong>Total:</strong> 111 measurements<br>
       <strong>JITs:</strong> cpython, cpython_jit, numba_nopython, numba_object, pypy<br>
       <strong>Tasks:</strong> control_flow, dynamic_structures, numpy_ops, oop_code, python_features, simple_loop
     </div>
@@ -172,7 +172,7 @@
 
     new Chart(document.getElementById("time_control_flow"), {
       type: "bar",
-      data: {"labels": ["branching_heavy", "collatz_sequence", "early_exit_search", "nested_conditions", "state_machine"], "datasets": [{"label": "cpython", "data": [395.97815005108714, 0.057058362290263176, 222.15752499178052, 286.461949814111, 389.7952834609896], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [73.7395416945219, 0.01688343472778797, 52.460925094783306, 87.95301639474928, 78.18979159928858], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [1.9787168130278587, 0.01237494871020317, 4.865508433431387, 2.6646417565643787, 2.148191584274173], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [2.344783488661051, 0.2048251684755087, 2413.965083518997, 2.1238747984170914, 0.983308395370841], "backgroundColor": "#999999"}, {"label": "pypy", "data": [5.135758174583316, 0.02071661874651909, 2.3915584199130535, 4.023033240810037, 5.018291622400284], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["branching_heavy", "collatz_sequence", "early_exit_search", "nested_conditions", "state_machine"], "datasets": [{"label": "cpython", "data": [259.89768328145146, 0.022191600874066353, 222.0342084299773, 286.8589414283633, 396.67015820741653], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [334.2526668217033, 0.019833259284496307, 246.8225249554962, 429.380999924615, 633.9108334388584], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [1.4693249948322773, 0.012049730867147446, 3.608974954113364, 2.114525204524398, 1.9637832418084145], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [1.4746250119060278, 0.12610838748514652, 2294.7352330200374, 3.4742502495646477, 0.9885167237371206], "backgroundColor": "#999999"}, {"label": "pypy", "data": [9.163074754178524, 0.03431662917137146, 11.63904182612896, 7.3413999285548925, 7.48989200219512], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -201,7 +201,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' ms';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' ms';
+                }
                 return label;
               }
             }
@@ -227,7 +231,7 @@
     
     new Chart(document.getElementById("memory_control_flow"), {
       type: "bar",
-      data: {"labels": ["branching_heavy", "collatz_sequence", "early_exit_search", "nested_conditions", "state_machine"], "datasets": [{"label": "cpython", "data": [0.496875, 0.3875, 39055.090625, 0.465625, 0.465625], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [0.3109375, 0.29375, 7952.3125, 0.3109375, 0.3109375], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.459375, 0.4359375, 46868.1388671875, 0.459375, 0.4671875], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 9.6, 0.0, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["branching_heavy", "collatz_sequence", "early_exit_search", "nested_conditions", "state_machine"], "datasets": [{"label": "cpython", "data": [0.496875, 0.3875, 39055.090625, 0.465625, 0.465625], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.465625, 0.3875, 39031.090625, 0.465625, 0.465625], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [0.3109375, 0.29375, 7952.3125, 0.3109375, 0.3109375], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.459375, 0.4359375, 46868.1388671875, 0.459375, 0.4671875], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 3.2, 0.0, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -256,7 +260,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' KB';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' KB';
+                }
                 return label;
               }
             }
@@ -272,7 +280,7 @@
 
     new Chart(document.getElementById("speedup_control_flow"), {
       type: "bar",
-      data: {"labels": ["branching_heavy", "collatz_sequence", "early_exit_search", "nested_conditions", "state_machine"], "datasets": [{"label": "cpython_jit", "data": [5.3699567552439005, 3.3795470655240796, 4.234723741344618, 3.256988350785119, 4.985245202578801], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [200.11865641610237, 4.610795860771402, 45.659673193723044, 107.50486406227341, 181.45275603651197], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [168.8762105183553, 0.2785710502031675, 0.09203013188075064, 134.87704172939434, 396.412036443545], "backgroundColor": "#999999"}, {"label": "pypy", "data": [77.10217977372238, 2.754231421083154, 92.89236806511178, 71.20546430196335, 77.6748967160557], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["branching_heavy", "collatz_sequence", "early_exit_search", "nested_conditions", "state_machine"], "datasets": [{"label": "cpython_jit", "data": [0.7775485705252003, 1.118908423257168, 0.8995702822099061, 0.6680755354305994, 0.6257507164778182], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [176.88236720639102, 1.8416677616070118, 61.52279005896443, 135.6611596847265, 201.992842062411], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [176.24662621551528, 0.17597244177497834, 0.0967580944568338, 82.56714998129715, 401.2781460163787], "backgroundColor": "#999999"}, {"label": "pypy", "data": [28.363588670160475, 0.64667193165288, 19.07667415813591, 39.07414719536055, 52.960731355159915], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -301,7 +309,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(1) + 'x speedup';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(1) + 'x speedup';
+                }
                 return label;
               }
             }
@@ -318,7 +330,7 @@
 
     new Chart(document.getElementById("time_dynamic_structures"), {
       type: "bar",
-      data: {"labels": ["dict_operations", "json_like_processing", "list_operations", "nested_structures", "set_operations"], "datasets": [{"label": "cpython", "data": [81.69769993983209, 69.17202481999993, 37.57289978675544, 14.207741618156433, 24.448375031352043], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [20.73820000514388, 14.448666526004672, 8.682883204892278, 4.61314981803298, 6.233691610395908], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 0.9482250548899174, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [7.841199962422252, 6.029108166694641, 0.9451000951230526, 5.740841804072261, 3.7937331944704056], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["dict_operations", "json_like_processing", "list_operations", "nested_structures", "set_operations"], "datasets": [{"label": "cpython", "data": [84.04266661964357, 70.97016642801464, 37.29474185965955, 13.972633378580213, 24.50799997895956], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [111.53491702862084, 84.21586658805609, 44.05449163168669, 14.658141415566206, 29.778183484449983], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 0.9524751920253038, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [7.62151638045907, 5.756408628076315, 0.9230580646544695, 4.758166614919901, 3.936483571305871], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -347,7 +359,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' ms';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' ms';
+                }
                 return label;
               }
             }
@@ -373,7 +389,7 @@
     
     new Chart(document.getElementById("memory_dynamic_structures"), {
       type: "bar",
-      data: {"labels": ["dict_operations", "json_like_processing", "list_operations", "nested_structures", "set_operations"], "datasets": [{"label": "cpython", "data": [110.876953125, 7928.858203125, 6329.7734375, 2413.7890625, 17454.671875], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 1290.953125, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 67.2, 464.0, 16.0, 38.4], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["dict_operations", "json_like_processing", "list_operations", "nested_structures", "set_operations"], "datasets": [{"label": "cpython", "data": [110.876953125, 7928.858203125, 6329.7734375, 2413.7890625, 17454.671875], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [111.367578125, 7906.710546875, 6305.5234375, 2415.059375, 17430.671875], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 1290.953125, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 60.8, 710.4, 19.2, 1993.6], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -402,7 +418,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' KB';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' KB';
+                }
                 return label;
               }
             }
@@ -418,7 +438,7 @@
 
     new Chart(document.getElementById("speedup_dynamic_structures"), {
       type: "bar",
-      data: {"labels": ["dict_operations", "json_like_processing", "list_operations", "nested_structures", "set_operations"], "datasets": [{"label": "cpython_jit", "data": [3.939478832278977, 4.78743313062865, 4.3272377273928315, 3.0798352922807375, 3.9219737772365195], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 39.62445370220407, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [10.419030292730168, 11.473011083482078, 39.75547138407962, 2.4748533582789523, 6.44441076325215], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["dict_operations", "json_like_processing", "list_operations", "nested_structures", "set_operations"], "datasets": [{"label": "cpython_jit", "data": [0.7535099219025507, 0.8427172847982066, 0.8465593513473866, 0.9532336319079294, 0.8230186368405418], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 39.15560444189371, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [11.027026962130781, 12.328896541823777, 40.40346245565839, 2.9365582396310073, 6.225861110562031], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -447,7 +467,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(1) + 'x speedup';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(1) + 'x speedup';
+                }
                 return label;
               }
             }
@@ -464,7 +488,7 @@
 
     new Chart(document.getElementById("time_numpy_ops"), {
       type: "bar",
-      data: {"labels": ["array_reduction", "matrix_multiply", "stencil_operation", "vector_operations"], "datasets": [{"label": "cpython", "data": [3.1423083506524563, 2.056849794462323, 5.304074985906482, 14.871658198535442], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [null, null, null, null], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 6.593416538089514, 11.978300148621202], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [2.863333420827985, 2.006341377273202, 5.01085021533072, 15.079183503985405], "backgroundColor": "#999999"}, {"label": "pypy", "data": [3.0150416307151318, 2.1710502449423075, 12.263649981468916, 41.56317478045821], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["array_reduction", "matrix_multiply", "stencil_operation", "vector_operations"], "datasets": [{"label": "cpython", "data": [2.7802002150565386, 1.9014835823327303, 5.0070165656507015, 14.713166607543826], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [null, null, null, null], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 6.568916374817491, 11.014541611075401], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [4.544725175946951, 6.228050170466304, 7.968641817569733, 26.38909979723394], "backgroundColor": "#999999"}, {"label": "pypy", "data": [null, null, null, null], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -493,7 +517,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' ms';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' ms';
+                }
                 return label;
               }
             }
@@ -519,7 +547,7 @@
     
     new Chart(document.getElementById("memory_numpy_ops"), {
       type: "bar",
-      data: {"labels": ["array_reduction", "matrix_multiply", "stencil_operation", "vector_operations"], "datasets": [{"label": "cpython", "data": [7893.6171875, 5861.3671875, 15658.203125, 46876.1609375], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [null, null, null, null], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 15594.2578125, 23438.0859375], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [7893.0078125, 5860.7578125, 23439.59375, 31251.0921875], "backgroundColor": "#999999"}, {"label": "pypy", "data": [3.2, 1100.8, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["array_reduction", "matrix_multiply", "stencil_operation", "vector_operations"], "datasets": [{"label": "cpython", "data": [7893.6171875, 5861.3671875, 15658.203125, 46876.1609375], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [null, null, null, null], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 15594.2578125, 23438.0859375], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [7893.0078125, 5860.7578125, 23439.59375, 31251.0921875], "backgroundColor": "#999999"}, {"label": "pypy", "data": [null, null, null, null], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -548,7 +576,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' KB';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' KB';
+                }
                 return label;
               }
             }
@@ -564,7 +596,7 @@
 
     new Chart(document.getElementById("speedup_numpy_ops"), {
       type: "bar",
-      data: {"labels": ["array_reduction", "matrix_multiply", "stencil_operation", "vector_operations"], "datasets": [{"label": "cpython_jit", "data": [null, null, null, null], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 0.8044501595288825, 1.2415499706982456], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [1.0974301238532678, 1.0251743884471778, 1.0585179676053056, 0.9862376298162885], "backgroundColor": "#999999"}, {"label": "pypy", "data": [1.0422106012205008, 0.9473985225602095, 0.4325037810049411, 0.3578085234607165], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["array_reduction", "matrix_multiply", "stencil_operation", "vector_operations"], "datasets": [{"label": "cpython_jit", "data": [null, null, null, null], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, 0.7622286964780878, 1.3357947272857331], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.611742208257345, 0.30530961220409747, 0.6283400208315219, 0.5575471206140209], "backgroundColor": "#999999"}, {"label": "pypy", "data": [null, null, null, null], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -593,7 +625,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(1) + 'x speedup';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(1) + 'x speedup';
+                }
                 return label;
               }
             }
@@ -610,7 +646,7 @@
 
     new Chart(document.getElementById("time_oop_code"), {
       type: "bar",
-      data: {"labels": ["linked_list_traversal", "method_calls_heavy", "point_operations", "polymorphic_shapes", "vector_math"], "datasets": [{"label": "cpython", "data": [27.122308360412717, 242.9121497552842, 1103.1762583181262, 624.5353416074067, 677.7132417540997], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [1.156916655600071, 42.63501660898328, 284.7185086924583, 46.8861916102469, 77.02906676568091], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [51.00778345949948, 1139.6724249701947, null, 1427.0858504343778, 929.7502831555903], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.16245008446276188, 2.1964082028716803, 25.011041574180126, 3.454583464190364, 4.82453340664506], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["linked_list_traversal", "method_calls_heavy", "point_operations", "polymorphic_shapes", "vector_math"], "datasets": [{"label": "cpython", "data": [13.881341367959976, 176.82495024055243, 1083.9025999885052, 604.8339833971113, 672.9643499478698], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [16.075616516172886, 189.35644156299531, 779.8941501881927, 253.0599918216467, 679.5366331934929], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [51.68517492711544, 1163.5726334061474, null, 1458.1330417655408, 983.5317167919129], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.15312479808926582, 2.3088413290679455, 24.941950431093574, 3.4182081930339336, 4.854716872796416], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -639,7 +675,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' ms';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' ms';
+                }
                 return label;
               }
             }
@@ -665,7 +705,7 @@
     
     new Chart(document.getElementById("memory_oop_code"), {
       type: "bar",
-      data: {"labels": ["linked_list_traversal", "method_calls_heavy", "point_operations", "polymorphic_shapes", "vector_math"], "datasets": [{"label": "cpython", "data": [109.5625, 0.715625, 10.8171875, 13.121875, 1.3015625], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [110.9537109375, 1.889453125, null, 16.1189453125, 2.05703125], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["linked_list_traversal", "method_calls_heavy", "point_operations", "polymorphic_shapes", "vector_math"], "datasets": [{"label": "cpython", "data": [109.5625, 0.715625, 10.8171875, 13.121875, 1.3015625], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [86.85625, 0.715625, 10.8171875, 13.075, 1.3015625], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [110.9537109375, 1.889453125, null, 16.1189453125, 2.05703125], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -694,7 +734,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' KB';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' KB';
+                }
                 return label;
               }
             }
@@ -710,7 +754,7 @@
 
     new Chart(document.getElementById("speedup_oop_code"), {
       type: "bar",
-      data: {"labels": ["linked_list_traversal", "method_calls_heavy", "point_operations", "polymorphic_shapes", "vector_math"], "datasets": [{"label": "cpython_jit", "data": [23.443614740203465, 5.697479890370258, 3.87462080840601, 13.320240355604305, 8.798149454616581], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.5317288170725555, 0.21314207875270558, null, 0.4376298324430237, 0.7289196400714479], "backgroundColor": "#999999"}, {"label": "pypy", "data": [166.9577978374638, 110.59517508525519, 44.10756965263606, 180.78455711990634, 140.47228708597044], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["linked_list_traversal", "method_calls_heavy", "point_operations", "polymorphic_shapes", "vector_math"], "datasets": [{"label": "cpython_jit", "data": [0.8635028929680328, 0.9338206230587941, 1.3898073215794138, 2.390081415253464, 0.990328287064177], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.2685749131648474, 0.1519672645814379, null, 0.4148002727273531, 0.6842324842791518], "backgroundColor": "#999999"}, {"label": "pypy", "data": [90.6537774493436, 76.58601221935626, 43.457010428393424, 176.94474685003686, 138.62072033878025], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -739,7 +783,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(1) + 'x speedup';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(1) + 'x speedup';
+                }
                 return label;
               }
             }
@@ -756,7 +804,7 @@
 
     new Chart(document.getElementById("time_python_features"), {
       type: "bar",
-      data: {"labels": ["context_managers", "decorator_heavy", "dynamic_attributes", "eval_expressions", "exception_handling_heavy", "generator_expressions", "metaclass_usage", "string_formatting_complex"], "datasets": [{"label": "cpython", "data": [61.02478336542845, 156.3044833485037, 52.85631683655083, 449.9641750473529, 3.770683240145445, 2.4286584462970495, 2.0065585616976023, 889.3496667500585], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [5.751741724088788, 17.86517519503832, 3.9827667642384768, 60.17649155110121, 0.5172748118638992, 0.2361332532018423, 0.370583264157176, 92.32206656597555], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null, 0.07815812714397907, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, 321.4848332107067, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [7.578924996778369, 0.5888750310987234, 14.560149982571602, 105.25151654146612, 0.7504498586058617, 0.1458663959056139, 2.9129086527973413, 187.71944157779217], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["context_managers", "decorator_heavy", "dynamic_attributes", "eval_expressions", "exception_handling_heavy", "generator_expressions", "metaclass_usage", "string_formatting_complex"], "datasets": [{"label": "cpython", "data": [24.23423333093524, 103.86068318039179, 22.82064175233245, 170.0534749776125, 2.388833649456501, 1.435432955622673, 1.2865000870078802, 480.2744834218174], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [27.804833184927702, 102.60617500171065, 28.390741674229503, 209.5927834045142, 3.0322997830808163, 1.5272915828973055, 1.2798834592103958, 740.6949995551258], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null, 0.06690002046525478, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, 358.51738336496055, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [1.9853420089930296, 0.13765818439424038, 3.4709831699728966, 51.83689184486866, 0.06129187531769276, 0.055949995294213295, 1.4487337786704302, 57.44487508200109], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -785,7 +833,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' ms';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' ms';
+                }
                 return label;
               }
             }
@@ -811,7 +863,7 @@
     
     new Chart(document.getElementById("memory_python_features"), {
       type: "bar",
-      data: {"labels": ["context_managers", "decorator_heavy", "dynamic_attributes", "eval_expressions", "exception_handling_heavy", "generator_expressions", "metaclass_usage", "string_formatting_complex"], "datasets": [{"label": "cpython", "data": [4.21875, 1.7265625, 18.21796875, 32.5076171875, 0.840625, 193.5703125, 118.65625, 10.37109375], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null, 46.9921875, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, 33.1869140625, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [3.2, 0.0, 9.6, 144.0, 0.0, 0.0, 6.4, 0.0], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["context_managers", "decorator_heavy", "dynamic_attributes", "eval_expressions", "exception_handling_heavy", "generator_expressions", "metaclass_usage", "string_formatting_complex"], "datasets": [{"label": "cpython", "data": [4.21875, 1.7265625, 11.8140625, 32.5076171875, 0.840625, 193.5703125, 118.65625, 10.37109375], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [8.63125, 1.7265625, 12.3373046875, 33.0029296875, 0.946875, 181.5703125, 95.60625, 10.37109375], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null, 46.9921875, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, 33.1869140625, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [3.2, 0.0, 6.4, 0.0, 0.0, 0.0, 3.2, 0.0], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -840,7 +892,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' KB';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' KB';
+                }
                 return label;
               }
             }
@@ -856,7 +912,7 @@
 
     new Chart(document.getElementById("speedup_python_features"), {
       type: "bar",
-      data: {"labels": ["context_managers", "decorator_heavy", "dynamic_attributes", "eval_expressions", "exception_handling_heavy", "generator_expressions", "metaclass_usage", "string_formatting_complex"], "datasets": [{"label": "cpython_jit", "data": [10.609792006106849, 8.749115619751327, 13.271255879493411, 7.477407928729915, 7.289516430460862, 10.285118310808505, 5.4145957353502014, 9.633121309243094], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null, 31.0736520313888, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, 1.399643555664844, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [8.05190490621938, 265.4289536726845, 3.6302041462360948, 4.2751324620589175, 5.024563862468282, 16.64988314284921, 0.6888504930529326, 4.737653485835169], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["context_managers", "decorator_heavy", "dynamic_attributes", "eval_expressions", "exception_handling_heavy", "generator_expressions", "metaclass_usage", "string_formatting_complex"], "datasets": [{"label": "cpython_jit", "data": [0.8715834822584732, 1.0122264393800882, 0.8038057622512526, 0.811351766102601, 0.7877960031476328, 0.9398552127810627, 1.0051697111560192, 0.6484105923629544], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [null, null, null, null, null, 21.45639038134794, null, null], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [null, null, null, 0.47432421095326044, null, null, null, null], "backgroundColor": "#999999"}, {"label": "pypy", "data": [12.20657862532557, 754.4824424165319, 6.574690983739528, 3.280549217467137, 38.974719521543676, 25.655640328018663, 0.8880169054859484, 8.360614984996275], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -885,7 +941,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(1) + 'x speedup';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(1) + 'x speedup';
+                }
                 return label;
               }
             }
@@ -902,7 +962,7 @@
 
     new Chart(document.getElementById("time_simple_loop"), {
       type: "bar",
-      data: {"labels": ["fibonacci_loop", "prime_count_loop", "simple_loop"], "datasets": [{"label": "cpython", "data": [28.51214138790965, 104.15354985743761, 4086.320108221844], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [6.187916360795498, 71.03659976273775, 824.0843834355474], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [0.561008183285594, 2.6974170468747616, 0.01734974794089794], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.6713999900966883, 2.716158190742135, 0.014424743130803108], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.6259330082684755, 9.859150042757392, 10.380483465269208], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["fibonacci_loop", "prime_count_loop", "simple_loop"], "datasets": [{"label": "cpython", "data": [29.462916823104024, 108.27499986626208, 4053.8818002212793], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [33.814808586612344, 85.44499999843538, 4637.690524850041], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [0.47036632895469666, 2.6047836523503065, 0.010933354496955872], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [1.2094334233552217, 7.446283334866166, 0.015666848048567772], "backgroundColor": "#999999"}, {"label": "pypy", "data": [1.0405834298580885, 12.736674956977367, 16.997933387756348], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -931,7 +991,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' ms';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' ms';
+                }
                 return label;
               }
             }
@@ -957,7 +1021,7 @@
     
     new Chart(document.getElementById("memory_simple_loop"), {
       type: "bar",
-      data: {"labels": ["fibonacci_loop", "prime_count_loop", "simple_loop"], "datasets": [{"label": "cpython", "data": [0.534375, 0.5671875, 0.54140625], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.0, 0.0, 0.0], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [0.3109375, 0.3109375, 0.3171875], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.44375, 0.428125, 0.434375], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["fibonacci_loop", "prime_count_loop", "simple_loop"], "datasets": [{"label": "cpython", "data": [0.534375, 0.5671875, 0.54140625], "backgroundColor": "#2563eb"}, {"label": "cpython_jit", "data": [0.534375, 0.5046875, 0.51015625], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [0.3109375, 0.3109375, 0.3171875], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [0.44375, 0.428125, 0.434375], "backgroundColor": "#999999"}, {"label": "pypy", "data": [0.0, 0.0, 0.0], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -986,7 +1050,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(2) + ' KB';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(2) + ' KB';
+                }
                 return label;
               }
             }
@@ -1002,7 +1070,7 @@
 
     new Chart(document.getElementById("speedup_simple_loop"), {
       type: "bar",
-      data: {"labels": ["fibonacci_loop", "prime_count_loop", "simple_loop"], "datasets": [{"label": "cpython_jit", "data": [4.607712794657784, 1.4661955978370371, 4.958618547273369], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [50.82304008637767, 38.61232729218136, 235526.1945096797], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [42.46669914874979, 38.34590717596598, 283285.46797452297], "backgroundColor": "#999999"}, {"label": "pypy", "data": [45.55142644862756, 10.564151007515056, 393.6541223627747], "backgroundColor": "#dc2626"}]},
+      data: {"labels": ["fibonacci_loop", "prime_count_loop", "simple_loop"], "datasets": [{"label": "cpython_jit", "data": [0.8713021913945926, 1.2671894185528088, 0.8741164979636844], "backgroundColor": "#16a34a"}, {"label": "numba_nopython", "data": [62.638235369823306, 41.567751612908474, 370781.15425142256], "backgroundColor": "#999999"}, {"label": "numba_object", "data": [24.360924920834186, 14.540811166730622, 258755.41702160545], "backgroundColor": "#999999"}, {"label": "pypy", "data": [28.313843924193645, 8.501041302537692, 238.49262776504938], "backgroundColor": "#dc2626"}]},
       options: {
         responsive: true,
         interaction: {
@@ -1031,7 +1099,11 @@
               label: function(context) {
                 let label = context.dataset.label || '';
                 if (label) { label += ': '; }
-                label += context.parsed.y.toFixed(1) + 'x speedup';
+                if (context.parsed.y === null || context.parsed.y === undefined) {
+                  label += 'N/A (skipped)';
+                } else {
+                  label += context.parsed.y.toFixed(1) + 'x speedup';
+                }
                 return label;
               }
             }

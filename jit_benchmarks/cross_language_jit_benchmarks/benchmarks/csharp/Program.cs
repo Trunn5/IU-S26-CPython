@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text;
+using System.Globalization;
 
 static long FibonacciIter(int n)
 {
@@ -93,7 +94,7 @@ static int JsonRoundtrip(int items)
     foreach (char ch in encoded)
     {
         if (ch == '{')
-        {
+        {   
             count++;
         }
     }
@@ -161,4 +162,7 @@ for (int i = 0; i < repeat; i++)
 double avgTime = times.Average();
 double avgMemory = memories.Average();
 
-Console.WriteLine($"{{\"benchmark\":\"{benchmark}\",\"time_ms\":{avgTime},\"memory_kb\":{avgMemory},\"sink\":{sink}}}");
+string json = string.Format(CultureInfo.InvariantCulture,
+    "{{\"benchmark\":\"{0}\",\"time_ms\":{1:F6},\"memory_kb\":{2:F2},\"sink\":{3}}}",
+    benchmark, avgTime, avgMemory, sink);
+Console.WriteLine(json);
